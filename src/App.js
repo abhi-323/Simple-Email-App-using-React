@@ -22,7 +22,10 @@ const App = () => {
   // console.log("app: ", selectedEmailId);
 
   function handleSelectedEmailId(id, name, date, subject) {
-    setSelectedEmailId(id);
+    // console.log(id);
+    // console.log(selectedEmailId);
+    if (id === selectedEmailId) setSelectedEmailId(null);
+    else setSelectedEmailId(id);
     setSelectedName(name);
     setSelectedDate(date);
     setSelectedSubject(subject);
@@ -37,7 +40,6 @@ const App = () => {
 
     setFavouriteList(users.filter((f) => !f.from.id == id));
     console.log(favouriteList);
-    // return (  );
   }
 
   return (

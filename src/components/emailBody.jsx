@@ -26,7 +26,7 @@ function EmailBody(props) {
         </span>
       </div>
       <div className="flex-1 flex-col mt-8 mr-8 ">
-        <div className="flex grow container">
+        <div className="flex grow mr-8">
           <div className="flex grow text-3xl ">
             <b>{props.subject}</b>
           </div>
