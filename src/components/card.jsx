@@ -1,12 +1,10 @@
 import React from "react";
 import moment from "moment/moment";
 import { useRecoilState } from "recoil";
-import { readEmailsAtom, selectedFilterAtom } from "./recoil/recoil";
+import { readEmailsAtom } from "./recoil/recoil";
 
 const Card = (props) => {
   const [readEmails, setReadEmails] = useRecoilState(readEmailsAtom);
-  const [selectedFilter, setSelectedFilter] =
-    useRecoilState(selectedFilterAtom);
 
   function handleReadEmails(id) {
     const newRead = [...readEmails];

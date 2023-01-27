@@ -7,7 +7,7 @@ import {
   readEmailsAtom,
   selectedFilterAtom,
 } from "./components/recoil/recoil";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 
 const App = () => {
   const [users, setUsers] = useState([]);

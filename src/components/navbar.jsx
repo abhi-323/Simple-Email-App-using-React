@@ -2,7 +2,7 @@ import React from "react";
 import { useRecoilState } from "recoil";
 import { selectedFilterAtom } from "./recoil/recoil";
 
-function NavBar(props) {
+function NavBar() {
   const [selectedFilter, setSelectedFilter] =
     useRecoilState(selectedFilterAtom);
 
