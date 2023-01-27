@@ -2,11 +2,12 @@ import React from "react";
 import { useRecoilState } from "recoil";
 import { selectedFilterAtom } from "./recoil/recoil";
 
-function NavBar() {
+function NavBar(props) {
   const [selectedFilter, setSelectedFilter] =
     useRecoilState(selectedFilterAtom);
 
   const selectedButtonColor = " bg-[#CFD2DC] rounded-full ";
+
   return (
     <nav className="bg-[#F4F5F9] border-gray-200 px-2 sm:px-4 py-2.5 ">
       <div className="pl-14 pt-4 container flex flex-wrap items-center justify-between mx-auto">
