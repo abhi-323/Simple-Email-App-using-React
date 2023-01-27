@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import NavBar from "./components/navbar";
 import Card from "./components/card";
 import EmailBody from "./components/emailBody";
+import { favouriteEmailAtom } from "./components/recoil/recoil";
+import { useRecoilState } from "recoil";
 
 const App = () => {
   const [users, setUsers] = useState([]);
@@ -9,9 +11,7 @@ const App = () => {
   const [selectedName, setSelectedName] = useState(null);
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedSubject, setSelectedSubject] = useState(null);
-  const [favourite, setFavourite] = useState(false);
-  const [selectedFavourite, setSelectedFavourite] = useState(null);
-  const [favouriteList, setFavouriteList] = useState([]);
+  const [favouriteList, setFavouriteList] = useRecoilState(favouriteEmailAtom);
 
   useEffect(() => {
     fetch("https://flipkart-email-mock.now.sh")
@@ -19,32 +19,31 @@ const App = () => {
       .then((response) => setUsers(response.list));
   }, []);
 
-  // console.log("app: ", selectedEmailId);
-
   function handleSelectedEmailId(id, name, date, subject) {
-    // console.log(id);
-    // console.log(selectedEmailId);
     if (id === selectedEmailId) setSelectedEmailId(null);
     else setSelectedEmailId(id);
     setSelectedName(name);
     setSelectedDate(date);
     setSelectedSubject(subject);
-    // console.log(id);
-    // console.log(name);
-    // console.log(date);
   }
 
   function handleFavourite(id) {
-    setFavourite(!favourite);
-    setSelectedFavourite(id);
+    let newFavouriteList = [...favouriteList];
+    if (newFavouriteList.includes(id)) {
+      newFavouriteList = newFavouriteList.filter((email) => email !== id);
+    } else {
+      newFavouriteList.push(id);
+    }
+    setFavouriteList(newFavouriteList);
+  }
 
-    setFavouriteList(users.filter((f) => !f.from.id == id));
-    console.log(favouriteList);
+  function handleFilterFavourite() {
+    return console.log("fav clicked");
   }
 
   return (
     <>
-      <NavBar />
+      <NavBar filterFavourites={handleFilterFavourite} />
       <main className="container bg-[#F4F5F9] text-[#636363]">
         <div className="flex ml-14 mr-14 mb-14 ">
           <div className="grow  w-[35%]">
@@ -59,8 +58,7 @@ const App = () => {
                   date={v.date}
                   setSelectedEmailId={handleSelectedEmailId}
                   selectedEmailId={selectedEmailId}
-                  favourite={favourite}
-                  selectedFavourite={selectedFavourite}
+                  favouriteList={favouriteList}
                 />
               </div>
             ))}
@@ -73,9 +71,8 @@ const App = () => {
                 name={selectedName}
                 date={selectedDate}
                 subject={selectedSubject}
-                favourite={favourite}
                 onClick={handleFavourite}
-                selectedFavourite={selectedFavourite}
+                favouriteList={favouriteList}
               />
             </div>
           )}

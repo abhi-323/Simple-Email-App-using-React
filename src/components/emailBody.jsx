@@ -11,15 +11,8 @@ function EmailBody(props) {
       .then((response) => setEmailContent(response.body));
   }, [props.selectedEmailId]);
 
-  // function handleFavourite(id) {
-  //   let favourite = true ? false : true;
-  //   // setFavourite(favourite);
-  //   // return favourite;
-  //   console.log(favourite);
-  // }
-
   return (
-    <div className="grow flex border-2 m-8 bg-white border-[#CFD2DC] rounded-lg">
+    <div className=" grow flex border-2 m-8 bg-white border-[#CFD2DC] rounded-lg">
       <div className="mb-8 ml-8 mt-8 mr-7 inline-flex items-center justify-center w-14 h-14 overflow-hidden  bg-[#E54065] rounded-full dark:bg-[#E54065]">
         <span className=" font-medium text-xl text-white dark:text-white">
           {props.name.charAt(0).toUpperCase()}
@@ -34,7 +27,9 @@ function EmailBody(props) {
             onClick={() => props.onClick(props.selectedEmailId)}
             className="flex-none text-sm h-8 w-40 text-white  bg-[#E54065] rounded-full  "
           >
-            {!props.favourite ? "Mark as Favourite" : "Remove from Favourite"}
+            {props.favouriteList.includes(props.selectedEmailId)
+              ? "Remove from Favourite"
+              : "Mark as Favourite"}
           </button>
         </div>
         <div className="flex-1 grow ">

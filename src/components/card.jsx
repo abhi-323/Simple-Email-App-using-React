@@ -1,23 +1,40 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import moment from "moment/moment";
+import { useRecoilState } from "recoil";
+import { readEmailsAtom, selectedFilterAtom } from "./recoil/recoil";
 
 const Card = (props) => {
+  const [readEmails, setReadEmails] = useRecoilState(readEmailsAtom);
+  const [selectedFilter, setSelectedFilter] =
+    useRecoilState(selectedFilterAtom);
+
+  function handleReadEmails(id) {
+    const newRead = [...readEmails];
+
+    if (!newRead.includes(id)) {
+      newRead.push(id);
+    }
+    setReadEmails(newRead);
+  }
   return (
     <div
       key={props.id}
-      onClick={() =>
+      onClick={() => {
         props.setSelectedEmailId(
           props.id,
           props.name,
           props.date,
           props.subject
-        )
-      }
+        );
+        handleReadEmails(props.id);
+      }}
       className={`flex flex-row border-2 ${
         props.id === props.selectedEmailId
           ? "border-[#E54065]"
           : "border-[#CFD2DC]"
-      } bg-white h-auto w-auto m-8 rounded-lg overflow-hidden`}
+      } ${
+        readEmails.includes(props.id) === true ? "bg-[#F2F2F2]" : "bg-white"
+      } h-auto w-auto m-8 rounded-lg overflow-hidden`}
     >
       <div className="m-2 inline-flex items-center justify-center w-12 h-12 overflow-hidden  bg-[#E54065] rounded-full dark:bg-[#E54065]">
         <span className=" font-medium text-xl text-white dark:text-white">
@@ -41,9 +58,7 @@ const Card = (props) => {
         <div className="flex">
           <h2>{moment(props.date).format("DD/MM/yyyy hh:mm a")}</h2>
           <h2 className="pl-4 font-bold text-[#E54065]">
-            {props.selectedFavourite === props.id && props.favourite
-              ? "Favourite"
-              : ""}
+            {props.favouriteList.includes(props.id) ? "Favourite" : ""}
           </h2>
         </div>
       </div>
